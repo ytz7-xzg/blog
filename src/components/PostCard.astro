@@ -1,0 +1,29 @@
+---
+import { formatDate } from '../utils';
+
+interface Props {
+  href: string;
+  title: string;
+  date: string;
+  category: string;
+  tags: string[];
+  description?: string;
+}
+
+const { href, title, date, category, tags, description } = Astro.props;
+---
+<article class="post-card">
+  <div class="post-card-meta">
+    <span class="badge badge-category">{category}</span>
+    <time datetime={date}>{formatDate(date)}</time>
+  </div>
+  <h2 class="post-card-title"><a href={href}>{title}</a></h2>
+  {description && <p class="post-card-desc">{description}</p>}
+  {tags.length > 0 && (
+    <div class="tag-list">
+      {tags.map((tag) => (
+        <span class="badge badge-tag">#{tag}</span>
+      ))}
+    </div>
+  )}
+</article>

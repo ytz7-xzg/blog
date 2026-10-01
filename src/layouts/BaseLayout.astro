@@ -1,0 +1,56 @@
+---
+import { SITE } from '../consts';
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+const base = import.meta.env.BASE_URL;
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const { title, description = SITE.description } = Astro.props;
+const fullTitle = title ? `${title} · ${SITE.title}` : SITE.title;
+---
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <meta name="generator" content={Astro.generator} />
+    <title>{fullTitle}</title>
+    <link rel="icon" type="image/svg+xml" href={`${base}favicon.svg`} />
+    <script is:inline>
+      // 首屏前初始化主题，避免闪烁（FOUC）
+      (function () {
+        function apply(theme) {
+          document.documentElement.setAttribute('data-theme', theme);
+          // 同时挂 .dark 类，供代码高亮等第三方样式使用
+          document.documentElement.classList.toggle('dark', theme === 'dark');
+        }
+        var saved = localStorage.getItem('theme');
+        var theme =
+          saved === 'light' || saved === 'dark'
+            ? saved
+            : window.matchMedia('(prefers-color-scheme: dark)').matches
+              ? 'dark'
+              : 'light';
+        apply(theme);
+        window.__setTheme = function (next) {
+          localStorage.setItem('theme', next);
+          apply(next);
+        };
+      })();
+    </script>
+  </head>
+  <body>
+    <Header />
+    <main class="container main">
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>

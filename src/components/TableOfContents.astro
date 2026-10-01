@@ -1,0 +1,27 @@
+---
+interface Heading {
+  depth: number;
+  slug: string;
+  text: string;
+}
+
+interface Props {
+  headings: Heading[];
+}
+
+const { headings } = Astro.props;
+// 只保留二级、三级标题
+const toc = headings.filter((h) => h.depth >= 2 && h.depth <= 3);
+---
+{toc.length > 0 && (
+  <nav class="toc">
+    <p class="toc-title">目录</p>
+    <ul>
+      {toc.map((h) => (
+        <li class={`toc-depth-${h.depth}`}>
+          <a href={`#${h.slug}`}>{h.text}</a>
+        </li>
+      ))}
+    </ul>
+  </nav>
+)}

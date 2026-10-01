@@ -1,0 +1,42 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+<BaseLayout title="简历">
+  <h1 class="page-title">个人简历</h1>
+
+  <section class="section">
+    <h2>教育背景</h2>
+    <div class="resume-item">
+      <div class="role">XX大学 · XX专业</div>
+      <div class="org">本科 · 20XX — 20XX</div>
+      <p>简单描述你的专业方向、GPA、主修课程等。</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>技能</h2>
+    <ul class="skill-list">
+      <li>编程语言：Python / C / JavaScript</li>
+      <li>前端：HTML / CSS / Astro</li>
+      <li>工具：Git / Linux / VS Code</li>
+    </ul>
+  </section>
+
+  <section class="section">
+    <h2>项目经历</h2>
+    <div class="resume-item">
+      <div class="role">个人博客</div>
+      <div class="org">Astro + GitHub Pages · 2026</div>
+      <p>搭建个人博客网站，支持 Markdown 写作、代码高亮、数学公式与明暗主题。</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>获奖与比赛</h2>
+    <div class="resume-item">
+      <div class="role">奖项 / 比赛名称</div>
+      <div class="org">主办方 · 20XX</div>
+      <p>一句话描述成果。</p>
+    </div>
+  </section>
+</BaseLayout>

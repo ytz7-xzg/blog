@@ -1,0 +1,52 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import TableOfContents from '../components/TableOfContents.astro';
+import { formatDate } from '../utils';
+import 'katex/dist/katex.min.css';
+
+interface Frontmatter {
+  title: string;
+  description?: string;
+  date: string;
+  category: string;
+  tags: string[];
+}
+
+interface Heading {
+  depth: number;
+  slug: string;
+  text: string;
+}
+
+interface Props {
+  frontmatter: Frontmatter;
+  headings: Heading[];
+}
+
+const { frontmatter, headings } = Astro.props;
+---
+<BaseLayout title={frontmatter.title} description={frontmatter.description}>
+  <article>
+    <header class="post-header">
+      <div class="post-meta">
+        <span class="badge badge-category">{frontmatter.category}</span>
+        <time datetime={frontmatter.date}>{formatDate(frontmatter.date)}</time>
+      </div>
+      <h1 class="post-title">{frontmatter.title}</h1>
+      {frontmatter.tags.length > 0 && (
+        <div class="tag-list">
+          {frontmatter.tags.map((tag) => (
+            <span class="badge badge-tag">#{tag}</span>
+          ))}
+        </div>
+      )}
+    </header>
+
+    <div class="post-layout">
+      <div class="prose">
+        <slot />
+      </div>
+      <TableOfContents headings={headings} />
+    </div>
+  </article>
+</BaseLayout>
